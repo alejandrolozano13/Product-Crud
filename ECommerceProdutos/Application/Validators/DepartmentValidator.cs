@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using FluentValidation;
 
-namespace Application.Validators.DepartmentValidator
+namespace Application.Validators
 {
     public class DepartmentValidator : AbstractValidator<Department>
     {

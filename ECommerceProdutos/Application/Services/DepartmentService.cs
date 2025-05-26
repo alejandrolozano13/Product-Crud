@@ -1,33 +1,41 @@
 ﻿using Application.Interfaces;
 using Domain.Entities;
+using Domain.IRepositories;
 
 namespace Application.Services
 {
     public class DepartmentService : IDepartmentService
     {
-        public Task<IEnumerable<Department>> GetAllAsync()
+        private readonly IDepartmentRepository _repository;
+
+        public DepartmentService(IDepartmentRepository repository)
         {
-            throw new NotImplementedException();
+            _repository = repository;
         }
 
-        public Task<Department> GetByIdAsync(string code)
+        public async Task<IEnumerable<Department>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _repository.GetAllAsync();
         }
 
-        public Task InsertAsync(Department department)
+        public async Task<Department> GetByIdAsync(string code)
         {
-            throw new NotImplementedException();
+            return await _repository.GetByIdAsync(code);
         }
 
-        public Task RemoveAsync(string code)
+        public async Task InsertAsync(Department department)
         {
-            throw new NotImplementedException();
+            await _repository.InsertAsync(department);
         }
 
-        public Task UpdateAsync(Department department)
+        public async Task RemoveAsync(string code)
         {
-            throw new NotImplementedException();
+            await _repository.RemoveAsync(code);
+        }
+
+        public async Task UpdateAsync(Department department)
+        {
+            await _repository.UpdateAsync(department);
         }
     }
 }

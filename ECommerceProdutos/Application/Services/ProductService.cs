@@ -1,33 +1,41 @@
 ﻿using Application.Interfaces;
 using Domain.Entities;
+using Domain.IRepositories;
 
 namespace Application.Services
 {
     public class ProductService : IProductService
     {
-        public Task<IEnumerable<Product>> GetAllAsync()
+        private readonly IProductRepository _repository;
+
+        public ProductService(IProductRepository repository)
         {
-            throw new NotImplementedException();
+            _repository = repository;
         }
 
-        public Task<Product> GetByIdAsync(Guid id)
+        public async Task<IEnumerable<Product>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _repository.GetAllAsycn();
         }
 
-        public Task InsertAsync(Product product)
+        public async Task<Product> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _repository.GetByIdAsycn(id);
         }
 
-        public Task RemoveAsync(Guid id)
+        public async Task InsertAsync(Product product)
         {
-            throw new NotImplementedException();
+            await _repository.InsertAsync(product);
         }
 
-        public Task UpdateAsync(Product product)
+        public async Task RemoveAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await _repository.RemoveAsync(id);
+        }
+
+        public async Task UpdateAsync(Product product)
+        {
+            await _repository.UpdateAsync(product);
         }
     }
 }

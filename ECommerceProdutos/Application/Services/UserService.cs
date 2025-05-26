@@ -1,38 +1,46 @@
 ﻿using Application.Interfaces;
 using Domain.Entities;
+using Domain.IRepositories;
 
 namespace Application.Services
 {
     public class UserService : IUserService
     {
-        public Task Add(User user)
+        private readonly IUserRepository _userRepository;
+
+        public UserService(IUserRepository userRepository)
         {
-            throw new NotImplementedException();
+            _userRepository = userRepository;
         }
 
-        public Task Delete(string id)
+        public async Task Add(User user)
         {
-            throw new NotImplementedException();
+            await _userRepository.Add(user);
         }
 
-        public Task<List<User>> GetAll()
+        public async Task Delete(string id)
         {
-            throw new NotImplementedException();
+            await _userRepository.Delete(id);
         }
 
-        public Task<User> GetByEmail(string email)
+        public async Task<List<User>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _userRepository.GetAll();
         }
 
-        public Task<User> GetById(string id)
+        public async Task<User> GetByEmail(string email)
         {
-            throw new NotImplementedException();
+            return await _userRepository.GetByEmail(email);
         }
 
-        public Task Update(string id, User user)
+        public async Task<User> GetById(string id)
         {
-            throw new NotImplementedException();
+            return await _userRepository.GetById(id);
+        }
+
+        public async Task Update(string id, User user)
+        {
+            await _userRepository.Update(id, user);
         }
     }
 }

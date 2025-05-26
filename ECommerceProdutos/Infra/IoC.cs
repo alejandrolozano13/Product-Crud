@@ -1,4 +1,5 @@
 ﻿using Domain.IRepositories;
+using Infra.Database;
 using Infra.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,6 +14,8 @@ namespace Infra
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             #endregion
+
+            services.AddSingleton<DatabaseInitializer>();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 
-namespace Application.Interfaces
+namespace Domain.IRepositories
 {
     public interface IProductRepository
     {

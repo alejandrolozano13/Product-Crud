@@ -1,9 +1,11 @@
 ﻿using Application.Interfaces;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceProdutos.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
