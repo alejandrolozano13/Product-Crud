@@ -17,6 +17,10 @@ namespace ECommerceProdutos.Controllers
             _userService = userService;
         }
 
+        /// <summary>
+        /// Retorna todos os usuários cadastrados no E-Commerce
+        /// </summary>
+        /// <returns>Lista de usuários</returns>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -24,6 +28,10 @@ namespace ECommerceProdutos.Controllers
             return Ok(users);
         }
 
+        /// <summary>
+        /// Cadastra um novo usuário no sistema.
+        /// </summary>
+        /// <param name="user">Objeto do usuário a ser inserido</param>
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] User user)
         {
@@ -31,6 +39,10 @@ namespace ECommerceProdutos.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Atualiza os dados de um usuário existente.
+        /// </summary>
+        /// <param name="user">Objeto do usuário atualizado</param>
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] User user)
         {
@@ -38,6 +50,10 @@ namespace ECommerceProdutos.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Remove um usuário do sistema pelo Id.
+        /// </summary>
+        /// <param name="id">Id do usuário a ser removido</param>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(Guid id)
         {

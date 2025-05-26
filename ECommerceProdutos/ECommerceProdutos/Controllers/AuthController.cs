@@ -15,6 +15,16 @@ namespace ECommerceProdutos.Controllers
             _authService = authService;
         }
 
+        /// <summary>
+        /// Autentica um usuário no sistema e retorna um token JWT.
+        /// </summary>
+        /// <param name="loginDto">Credenciais do usuário (e-mail e senha).</param>
+        /// <returns>
+        /// Um objeto contendo o token JWT e os dados do usuário autenticado.
+        /// Retorna 200 OK com o token em caso de sucesso ou 401 Unauthorized se as credenciais forem inválidas.
+        /// </returns>
+        /// <response code="200">Autenticação bem-sucedida. Retorna o token JWT e os dados do usuário.</response>
+        /// <response code="401">Credenciais inválidas.</response>
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {

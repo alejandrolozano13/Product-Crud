@@ -1,4 +1,5 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using System.Reflection;
+using Microsoft.OpenApi.Models;
 
 namespace ECommerceProdutos.Extensions
 {
@@ -8,6 +9,22 @@ namespace ECommerceProdutos.Extensions
         {
             services.AddSwaggerGen(options =>
             {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "E-Commerce Produtos API",
+                    Version = "v1",
+                    Description = "API para gerenciamento de produtos de um E-Commerce",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Juan Alejandro",
+                        Email = "alejandro20181999@gmail.com"
+                    }
+                });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                options.IncludeXmlComments(xmlPath);
+
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,

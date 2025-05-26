@@ -3,7 +3,6 @@ using Application.Services;
 using Application.Validators;
 using Domain.Entities;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application
@@ -20,12 +19,9 @@ namespace Application
             #endregion
 
             #region validation services
-            //services.AddFluentValidationAutoValidation();
-
             services.AddScoped<IValidator<User>, UserValidator>();
             services.AddScoped<IValidator<Product>, ProductValidator>();
             services.AddScoped<IValidator<Department>, DepartmentValidator>();
-            //services.AddValidatorsFromAssembly<UserValidator>();
             #endregion
         }
     }
