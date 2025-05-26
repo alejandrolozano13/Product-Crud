@@ -74,11 +74,13 @@ namespace Infra.Database
             var createUsersTable = @"
                 CREATE TABLE IF NOT EXISTS Users (
                     Id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                    Name VARCHAR(150) NOT NULL,
                     Email VARCHAR(150) UNIQUE NOT NULL,
                     Password VARCHAR(255) NOT NULL,
-                    Role VARCHAR(50) NOT NULL,
                     CreatedAt TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
-                );";
+                );
+            ";
+
             var cmdCreateUsers = new NpgsqlCommand(createUsersTable, connection);
             await cmdCreateUsers.ExecuteNonQueryAsync();
 
@@ -103,13 +105,13 @@ namespace Infra.Database
                 var hashedPassword = BCrypt.Net.BCrypt.HashPassword("Admin@123");
 
                 var insertAdmin = @"
-                    INSERT INTO Users (Email, Password, Role)
-                    VALUES (@Email, @Password, @Role);";
+                    INSERT INTO Users (Email, Password, Name)
+                    VALUES (@Email, @Password, @Name);";
 
                 var cmdInsertAdmin = new NpgsqlCommand(insertAdmin, connection);
                 cmdInsertAdmin.Parameters.AddWithValue("Email", "admin@ecommerce.com");
+                cmdInsertAdmin.Parameters.AddWithValue("Name", "admin");
                 cmdInsertAdmin.Parameters.AddWithValue("Password", hashedPassword);
-                cmdInsertAdmin.Parameters.AddWithValue("Role", "Admin");
                 await cmdInsertAdmin.ExecuteNonQueryAsync();
 
                 Console.WriteLine("Usuário admin criado com email 'admin@ecommerce.com' e senha 'Admin@123'");

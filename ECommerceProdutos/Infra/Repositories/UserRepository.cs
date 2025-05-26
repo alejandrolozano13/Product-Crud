@@ -32,24 +32,22 @@ namespace Infra.Repositories
 
         public async Task Add(User user)
         {
-            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
-
             var query = @"
-                INSERT INTO users (id, email, password, role)
-                VALUES (@Id, @Email, @Password, @Role);
+                INSERT INTO users (id, email, name, password)
+                VALUES (@Id, @Email, @Name, @Password);
             ";
 
             using var connection = CreateConnection();
             await connection.ExecuteAsync(query, user);
         }
 
-        public async Task Update(string id, User user)
+        public async Task Update(Guid id, User user)
         {
             var query = @"
                 UPDATE users
                 SET email = @Email,
                     password = @Password,
-                    role = @Role
+                    name = @Name
                 WHERE id = @Id;
             ";
 
@@ -58,11 +56,12 @@ namespace Infra.Repositories
             {
                 Id = id,
                 Email = user.Email,
-                Password = user.Password, // Já deve estar hashado antes de chamar
+                Password = user.Password,
+                Name = user.Name
             });
         }
 
-        public async Task Delete(string id)
+        public async Task Delete(Guid id)
         {
             var query = "DELETE FROM users WHERE id = @Id";
 
@@ -78,7 +77,7 @@ namespace Infra.Repositories
             return await connection.QueryFirstOrDefaultAsync<User>(query, new { Email = email });
         }
 
-        public async Task<User> GetById(string id)
+        public async Task<User> GetById(Guid id)
         {
             var query = "SELECT * FROM users WHERE id = @Id";
 

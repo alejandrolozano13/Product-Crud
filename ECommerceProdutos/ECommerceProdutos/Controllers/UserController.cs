@@ -31,15 +31,15 @@ namespace ECommerceProdutos.Controllers
             return NoContent();
         }
 
-        [HttpPatch("{id}")]
-        public async Task<IActionResult> Update(string id, [FromBody] User user)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] User user)
         {
             await _userService.Update(id, user);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Remove(string id)
+        public async Task<IActionResult> Remove(Guid id)
         {
             await _userService.Delete(id);
             return NoContent();

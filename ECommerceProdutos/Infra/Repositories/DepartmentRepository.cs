@@ -23,7 +23,7 @@ namespace Infra.Repositories
 
         public async Task<IEnumerable<Department>> GetAllAsync()
         {
-            var query = "SELECT * FROM departments";
+            var query = "SELECT * FROM department";
 
             using var connection = CreateConnection();
             return await connection.QueryAsync<Department>(query);
@@ -31,7 +31,7 @@ namespace Infra.Repositories
 
         public async Task<Department> GetByIdAsync(string code)
         {
-            var query = "SELECT * FROM departments WHERE code = @Code";
+            var query = "SELECT * FROM department WHERE code = @Code";
 
             using var connection = CreateConnection();
             return await connection.QueryFirstOrDefaultAsync<Department>(query, new { Code = code });
@@ -40,7 +40,7 @@ namespace Infra.Repositories
         public async Task InsertAsync(Department department)
         {
             var query = @"
-                INSERT INTO departments (code, description)
+                INSERT INTO department (code, description)
                 VALUES (@Code, @Description);
             ";
 
@@ -50,7 +50,7 @@ namespace Infra.Repositories
 
         public async Task RemoveAsync(string code)
         {
-            var query = "DELETE FROM departments WHERE code = @Code";
+            var query = "DELETE FROM department WHERE code = @Code";
 
             using var connection = CreateConnection();
             await connection.ExecuteAsync(query, new { Code = code });
@@ -59,7 +59,7 @@ namespace Infra.Repositories
         public async Task UpdateAsync(Department department)
         {
             var query = @"
-                UPDATE departments
+                UPDATE department
                 SET description = @Description
                 WHERE code = @Code;
             ";
