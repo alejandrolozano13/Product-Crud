@@ -1,0 +1,88 @@
+.background-loginPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(169deg, #2F558A 0%, #003D3D 0%, #00EAFF 100%);
+    font-family: Arial, sans-serif;
+}
+
+.container-login {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 350px;
+}
+
+.header-login-container h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: #333;
+    display: flex;
+    justify-content: center;
+}
+
+.header-login-container h2 {
+    display: flex;
+    justify-content: center;
+    margin-top: 4px;
+    font-weight: normal;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.body-login-container {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-container,
+.password-container {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    color: #555;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.login-button-container {
+    text-align: center;
+}
+
+.login-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 0;
+    width: 100%;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+}
+
+.login-button:disabled {
+    background-color: #a0a0a0;
+    cursor: not-allowed;
+}
+
+.error-message {
+    margin-top: 15px;
+    color: #d9534f;
+    font-weight: bold;
+    text-align: center;
+}

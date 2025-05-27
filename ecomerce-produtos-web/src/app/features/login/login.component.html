@@ -1,0 +1,26 @@
+<div class="background-loginPage">
+  <div class="container-login">
+    <div class="header-login-container">
+      <h1>Login</h1>
+      <h2>E-Commerce products</h2>
+    </div>
+    
+    <form [formGroup]="formularioLogin" (ngSubmit)="onSubmit()" class="body-login-container">
+      <div class="user-container">
+        <label for="usuario">Usuário:</label>
+        <input id="usuario" type="text" formControlName="usuario" />
+      </div>
+
+      <div class="password-container">
+        <label for="senha">Senha:</label>
+        <input id="senha" type="password" formControlName="senha" />
+      </div>
+
+      <div class="login-button-container">
+        <button type="submit" class="login-button" [disabled]="formularioLogin.invalid">Login</button>
+      </div>
+
+      <div class="error-message" *ngIf="erroLogin">{{ erroLogin }}</div>
+    </form>
+  </div>
+</div>

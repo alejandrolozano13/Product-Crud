@@ -12,7 +12,18 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddJwtAuthentication();
 builder.Services.AddSwaggerWithAuth();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
+app.UseCors("PermitirFrontend");
 
 using (var scope = app.Services.CreateScope())
 {
