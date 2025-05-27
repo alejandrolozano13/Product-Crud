@@ -29,14 +29,12 @@
                 <td class="px-3">
                     <button class="btn-acao editButton" (click)="editarProduto(produto)">Editar</button>
                     |
-                    <button class="btn-acao deleteButton text-danger" (click)="removerProduto(produto)">Remover</button>
+                    <button class="btn-acao deleteButton" (click)="removerProduto(produto)">Remover</button>
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <!-- Modal de Adicionar Produto -->
-    <!-- Modal de Adicionar Produto -->
     <div class="modal fade" id="modalAdicionarProduto" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -46,7 +44,6 @@
                 </div>
                 <div class="modal-body">
 
-                    <!-- Mensagem de erro do backend -->
                     <div *ngIf="erro" class="alert alert-danger" role="alert">
                         {{ erro }}
                     </div>
