@@ -1,1 +1,96 @@
-<p>product-list works!</p>
+<nav class="topbar">
+    <span class="topbar-title">E-Commerce Products</span>
+    <button class="topbar-button" (click)="adicionarProduto()">Adicionar Mais</button>
+</nav>
+
+<div class="container mt-4">
+    <table class="table table-striped text-center align-middle">
+        <thead class="table-light">
+            <tr>
+                <th class="px-3">#</th>
+                <th class="px-3">Código</th>
+                <th class="px-3">Descrição</th>
+                <th class="px-3">Departamento</th>
+                <th class="px-3">Preço</th>
+                <th class="px-3">Ativo</th>
+                <th class="px-3">Removido</th>
+                <th class="px-3">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let produto of products; let i = index">
+                <th scope="row" class="px-3">{{ i + 1 }}</th>
+                <td class="px-3">{{ produto.code }}</td>
+                <td class="px-3 descricao-col">{{ produto.description }}</td>
+                <td class="px-3">{{ produto.departmentCode }}</td>
+                <td class="px-3">{{ produto.price | currency:'BRL':'symbol':'1.2-2' }}</td>
+                <td class="px-3">{{ produto.active ? 'Sim' : 'Não' }}</td>
+                <td class="px-3">{{ produto.removed ? 'Sim' : 'Não' }}</td>
+                <td class="px-3">
+                    <button class="btn-acao editButton" (click)="editarProduto(produto)">Editar</button>
+                    |
+                    <button class="btn-acao deleteButton text-danger" (click)="removerProduto(produto)">Remover</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Modal de Adicionar Produto -->
+    <div class="modal fade" id="modalAdicionarProduto" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Adicionar Produto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Código</label>
+                            <input type="text" class="form-control" [(ngModel)]="novoProduto.code" name="code">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Descrição</label>
+                            <input type="text" class="form-control" [(ngModel)]="novoProduto.description"
+                                name="description">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Departamento</label>
+                            <select class="form-select" [(ngModel)]="novoProduto.departmentCode" name="departmentCode">
+                                <option *ngFor="let depto of departamentos" [value]="depto.code">
+                                    {{ depto.code }} - {{ depto.description }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Preço</label>
+                            <input type="text" class="form-control"
+                                [ngModel]="novoProduto.price | currency:'BRL':'symbol':'1.2-2'"
+                                (change)="formatarPreco($event)" name="price" />
+                        </div>
+
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input" type="checkbox" [(ngModel)]="novoProduto.active"
+                                name="active">
+                            <label class="form-check-label">Ativo</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" [(ngModel)]="novoProduto.removed"
+                                name="removed">
+                            <label class="form-check-label">Removido</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" (click)="salvarProduto()">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

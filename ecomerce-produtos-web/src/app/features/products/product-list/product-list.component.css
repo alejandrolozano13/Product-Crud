@@ -1,0 +1,64 @@
+.topbar {
+    background: linear-gradient(169deg, #2F558A 0%, #003D3D 0%, #00EAFF 100%);
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topbar-title {
+    color: white;
+    font-weight: 500;
+    font-size: 1.25rem;
+}
+
+.topbar-button {
+    background-color: white;
+    border: none;
+    color: #003D3D;
+    font-weight: 600;
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.topbar-button:hover {
+    background-color: #f0f0f0;
+}
+
+.btn-acao {
+    /* border: none; */
+    border-radius: 6px;
+    color: #fff;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.editButton{
+    background: rgb(54, 73, 202);
+}
+
+.deleteButton{
+    background: red;
+}
+
+.descricao-col {
+    max-width: 300px;
+    word-break: break-word;
+    white-space: normal;
+}
+
+.table td,
+.table th {
+    padding: 0.75rem 1rem;
+    word-break: break-word;
+    white-space: normal;
+    vertical-align: middle;
+}
+
+.table td.descricao-col {
+    max-width: 300px;
+}

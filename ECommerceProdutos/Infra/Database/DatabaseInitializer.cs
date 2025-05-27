@@ -65,8 +65,8 @@ namespace Infra.Database
                     Description VARCHAR(200) NOT NULL,
                     DepartmentCode VARCHAR(3) NOT NULL REFERENCES Department(Code),
                     Price NUMERIC(12,2) NOT NULL,
-                    Status BOOLEAN NOT NULL DEFAULT TRUE,
-                    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE
+                    Active BOOLEAN NOT NULL DEFAULT TRUE,
+                    Removed BOOLEAN NOT NULL DEFAULT FALSE
                 );";
             var cmdCreateProduct = new NpgsqlCommand(createProductTable, connection);
             await cmdCreateProduct.ExecuteNonQueryAsync();

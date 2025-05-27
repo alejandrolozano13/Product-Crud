@@ -23,7 +23,7 @@ namespace Infra.Repositories
 
         public async Task<IEnumerable<Product>> GetAllAsycn()
         {
-            var query = "SELECT * FROM products WHERE isdeleted = false";
+            var query = "SELECT * FROM products";
 
             using var connection = CreateConnection();
             var products = await connection.QueryAsync<Product>(query);
@@ -32,7 +32,7 @@ namespace Infra.Repositories
 
         public async Task<Product> GetByIdAsycn(Guid id)
         {
-            var query = "SELECT * FROM products WHERE id = @Id AND isdeleted = false";
+            var query = "SELECT * FROM products WHERE id = @Id";
 
             using var connection = CreateConnection();
             return await connection.QueryFirstOrDefaultAsync<Product>(query, new { Id = id });
@@ -41,10 +41,9 @@ namespace Infra.Repositories
         public async Task InsertAsync(Product product)
         {
             var query = @"
-                INSERT INTO products (id, code, description, departmentCode, price, status, isdeleted)
-                VALUES (@Id, @Code, @Description, @DepartmentCode, @Price, @Active, false);
+                INSERT INTO products (id, code, description, departmentCode, price, active, removed)
+                VALUES (@Id, @Code, @Description, @DepartmentCode, @Price, @Active, @Removed);
             ";
-
 
             using var connection = CreateConnection();
             await connection.ExecuteAsync(query, product);
@@ -52,7 +51,7 @@ namespace Infra.Repositories
 
         public async Task RemoveAsync(Guid id)
         {
-            var query = "UPDATE products SET isdeleted = true WHERE id = @Id";
+            var query = "UPDATE products SET removed = true WHERE id = @Id";
 
             using var connection = CreateConnection();
             await connection.ExecuteAsync(query, new { Id = id });
@@ -66,7 +65,9 @@ namespace Infra.Repositories
                     description = @Description,
                     departmentCode = @DepartmentCode,
                     price = @Price,
-                    status = @Active
+                    active = @Active,
+                    removed = @Removed
+
                 WHERE id = @Id;
             ";
 
