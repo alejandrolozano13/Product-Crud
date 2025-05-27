@@ -62,6 +62,12 @@ ecommerce-crud/
 
 ---
 
+## Login Default (Deixado para teste rápido):
+   user: admin@ecommerce.com
+   email: Admin@123
+
+---
+
 ## 🗃️ Campos do Produto
 
 Campo	            Tipo  	      Descrição
