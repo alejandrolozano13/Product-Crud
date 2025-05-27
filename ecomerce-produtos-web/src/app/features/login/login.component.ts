@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
       Password: this.formularioLogin.get('senha')?.value
     };
 
-    this.http.post<{ token: string }>('https://localhost:7244/Auth/login', dadosLogin)
+    this.http.post<{ token: string }>('http://localhost:5000/Auth/login', dadosLogin)
       .subscribe({
         next: (resposta) => {
           localStorage.setItem('token', resposta.token);

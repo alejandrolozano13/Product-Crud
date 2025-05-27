@@ -1,0 +1,51 @@
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Sipef@admin
+      POSTGRES_DB: ecommerce_produtos
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - ecommerce-network
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ./ECommerceProdutos
+      dockerfile: ECommerceProdutos/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=db;Database=ecommerce_produtos;Username=postgres;Password=Sipef@admin
+      - JWT_AUDIENCE=MeuAudience
+      - JWT_ISSUER=MeuIssuer
+      - JWT_KEY=MinhaChaveSecretaSuperSegura123!
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+    networks:
+      - ecommerce-network
+    restart: unless-stopped
+
+  front:
+    build:
+      context: ./ecomerce-produtos-web
+      dockerfile: Dockerfile
+    depends_on:
+      - api
+    ports:
+      - "4200:4200"
+    networks:
+      - ecommerce-network
+    restart: unless-stopped
+
+volumes:
+  db-data:
+
+networks:
+  ecommerce-network:
+    driver: bridge

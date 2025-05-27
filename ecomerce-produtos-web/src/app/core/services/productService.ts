@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
     providedIn: 'root',
 })
 export class ProductService {
-    private apiUrl = 'https://localhost:7244/product';
+    private apiUrl = 'http://localhost:5000/product';
 
     constructor(private http: HttpClient) { }
 
@@ -16,14 +16,14 @@ export class ProductService {
     }
 
     add(product: Product): Observable<void> {
-        return this.http.post<void>('https://localhost:7244/Product', product);
+        return this.http.post<void>('http://localhost:5000/Product', product);
     }
 
     update(produto: Product): Observable<void> {
-        return this.http.put<void>('https://localhost:7244/Product', produto);
+        return this.http.put<void>('http://localhost:5000/Product', produto);
     }
 
     delete(id: string): Observable<void> {
-        return this.http.delete<void>(`https://localhost:7244/Product/${id}`);
+        return this.http.delete<void>(`http://localhost:5000/Product/${id}`);
     }
 }
