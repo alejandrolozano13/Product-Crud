@@ -88,6 +88,8 @@ export class ProductListComponent implements OnInit {
   }
 
   adicionarProduto(): void {
+    this.erro = '';
+
     this.novoProduto = {
       code: '',
       description: '',
@@ -168,6 +170,7 @@ export class ProductListComponent implements OnInit {
   }
 
   editarProduto(produto: Product): void {
+    this.erro = '';
     this.isEditando = true;
     this.novoProduto = { ...produto };
 
