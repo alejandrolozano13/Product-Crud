@@ -36,6 +36,7 @@
     </table>
 
     <!-- Modal de Adicionar Produto -->
+    <!-- Modal de Adicionar Produto -->
     <div class="modal fade" id="modalAdicionarProduto" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -44,21 +45,28 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+
+                    <!-- Mensagem de erro do backend -->
+                    <div *ngIf="erro" class="alert alert-danger" role="alert">
+                        {{ erro }}
+                    </div>
+
+                    <form #form="ngForm">
                         <div class="mb-3">
                             <label class="form-label">Código</label>
-                            <input type="text" class="form-control" [(ngModel)]="novoProduto.code" name="code">
+                            <input required type="text" class="form-control" [(ngModel)]="novoProduto.code" name="code">
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Descrição</label>
-                            <input type="text" class="form-control" [(ngModel)]="novoProduto.description"
+                            <input required type="text" class="form-control" [(ngModel)]="novoProduto.description"
                                 name="description">
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Departamento</label>
-                            <select class="form-select" [(ngModel)]="novoProduto.departmentCode" name="departmentCode">
+                            <select required class="form-select" [(ngModel)]="novoProduto.departmentCode"
+                                name="departmentCode">
                                 <option *ngFor="let depto of departamentos" [value]="depto.code">
                                     {{ depto.code }} - {{ depto.description }}
                                 </option>
@@ -68,7 +76,7 @@
                         <div class="mb-3">
                             <label class="form-label">Preço</label>
                             <input type="text" class="form-control"
-                                [ngModel]="novoProduto.price | currency:'BRL':'symbol':'1.2-2'"
+                                [value]="novoProduto.price > 0 ? (novoProduto.price | currency:'BRL':'symbol':'1.2-2') : ''"
                                 (change)="formatarPreco($event)" name="price" />
                         </div>
 
@@ -87,10 +95,11 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" (click)="salvarProduto()">Salvar</button>
+                    <button type="button" class="btn btn-primary" (click)="salvarProduto()" [disabled]="!podeSalvar">
+                        Salvar
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-
 </div>

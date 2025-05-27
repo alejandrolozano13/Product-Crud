@@ -58,6 +58,14 @@ export class ProductListComponent implements OnInit {
     });
   }
 
+  get podeSalvar(): boolean {
+    return (
+      this.novoProduto.code.trim().length > 0 &&
+      this.novoProduto.description.trim().length > 0 &&
+      this.novoProduto.departmentCode.trim().length > 0 &&
+      this.novoProduto.price > 0
+    );
+  }
 
   formatarPreco(event: any) {
     let valor = event.target.value;
@@ -67,7 +75,7 @@ export class ProductListComponent implements OnInit {
 
     const valorNumerico = parseFloat(valor);
 
-    if (!isNaN(valorNumerico)) {
+    if (!isNaN(valorNumerico) && valorNumerico > 0) {
       this.novoProduto.price = valorNumerico;
       event.target.value = valorNumerico.toLocaleString('pt-BR', {
         style: 'currency',
@@ -98,31 +106,59 @@ export class ProductListComponent implements OnInit {
   }
 
   salvarProduto(): void {
-    if (this.isEditando) {
-      // Atualizar produto existente
-      this.productService.update(this.novoProduto).subscribe({
-        next: () => {
-          console.log('Produto atualizado com sucesso!');
-          this.fecharModal();
-          this.productService.getAll().subscribe(res => this.products = res);
-        },
-        error: (err) => {
-          console.error('Erro ao atualizar produto:', err);
-        }
-      });
-    } else {
-      // Criar novo produto
-      this.productService.add(this.novoProduto).subscribe({
-        next: () => {
-          console.log('Produto salvo com sucesso!');
-          this.fecharModal();
-          this.productService.getAll().subscribe(res => this.products = res);
-        },
-        error: (err) => {
-          console.error('Erro ao salvar produto:', err);
-        }
-      });
+    const formEl = document.querySelector('form') as HTMLFormElement;
+
+    if (!this.podeSalvar) {
+      alert('Preencha todos os campos corretamente. Preço deve ser maior que zero.');
+      return;
     }
+
+    if (!formEl.checkValidity()) {
+      Object.values(formEl.elements).forEach((el: any) => {
+        if (el?.classList?.contains('form-control') || el?.classList?.contains('form-select')) {
+          el.classList.add('ng-touched');
+        }
+      });
+      return;
+    }
+
+    const request$ = this.isEditando
+      ? this.productService.update(this.novoProduto)
+      : this.productService.add(this.novoProduto);
+
+    request$.subscribe({
+      next: () => {
+        const modalEl = document.getElementById('modalAdicionarProduto')!;
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        modal?.hide();
+
+        this.productService.getAll().subscribe(res => this.products = res);
+      },
+      error: (err) => {
+        if (err.error) {
+          if (typeof err.error === 'string') {
+            // Caso seja uma string com a mensagem completa do erro
+            this.erro = this.extrairMensagemErro(err.error);
+          } else if (err.error.message) {
+            // Caso seja objeto com campo message
+            this.erro = err.error.message;
+          } else {
+            this.erro = 'Erro desconhecido ao salvar produto.';
+          }
+        } else {
+          this.erro = 'Erro desconhecido ao salvar produto.';
+        }
+      }
+    });
+  }
+
+  private extrairMensagemErro(textoErro: string): string {
+    const linha = textoErro.split('\n').find(l => l.includes("System.Exception"));
+    if (linha) {
+      const msg = linha.split(':').slice(1).join(':').trim();
+      return msg || 'Erro ao salvar produto.';
+    }
+    return 'Erro ao salvar produto.';
   }
 
   private fecharModal(): void {

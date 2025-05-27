@@ -34,6 +34,9 @@ namespace Application.Services
             var result = await _validator.ValidateAsync(product);
             if(!result.IsValid) throw new ValidationException(result.Errors);
 
+            var produtoExistente = await _repository.GetByCodeAsync(product.Code);
+            if (produtoExistente is not null) throw new Exception($"Já existe um produto com o código '{product.Code}'.");
+
             await _repository.InsertAsync(product);
         }
 

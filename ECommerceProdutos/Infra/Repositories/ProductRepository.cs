@@ -38,6 +38,13 @@ namespace Infra.Repositories
             return await connection.QueryFirstOrDefaultAsync<Product>(query, new { Id = id });
         }
 
+        public async Task<Product> GetByCodeAsync(string code)
+        {
+            var query = "SELECT * FROM products WHERE code = @Code";
+            using var connection = CreateConnection();
+            return await connection.QueryFirstOrDefaultAsync<Product>(query, new { Code = code });
+        }
+
         public async Task InsertAsync(Product product)
         {
             var query = @"
